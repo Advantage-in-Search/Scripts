@@ -247,9 +247,6 @@ function update()
 					end
 				end
 				if not inViewport then
-                    for i,_ in next,obj do
-                        print(type,i,_)
-                    end;
 					SetProp(obj, "Visible", false)
 				end
 			else
@@ -271,13 +268,13 @@ local destroyed = false
 function esp:Visible(Name, bool)
 	local item
     if Name=="visible" then
-		item = VISIBLE
+		VTRACER = not VISIBLE
     elseif Name=="name" then
-		item = VNAME
+		VTRACER = not  VNAME
     elseif Name=="box" then
-		item = VBOX
+		VTRACER = not  VBOX
     elseif Name=="tracer" then
-		item = VTRACER
+		VTRACER = not  VTRACER
     end;
 	if typeof(bool) == 'boolean' then
 		item = bool
