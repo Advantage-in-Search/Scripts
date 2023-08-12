@@ -30,6 +30,7 @@ local fromRGB = Color3.fromRGB
 local mathfloor = math.floor
 local osclock = os.clock
 local FindFirstChild = game.FindFirstChild
+local color = fromRGB(255, 255, 255)
 
 local TypeOrigin = "bottom"
 local OBJECTS, ID = {}, 0
@@ -170,13 +171,11 @@ function update()
 			local model, obj, type = v.Model, v.Object, v.Type					-- objects shit
 			local cf, size, mid, inViewport, tl, tr, bl, br					  -- boxes shit
 			local tlx, tly, trx, try, blx, bly, brx, bry						 -- boxes corner axes shit
-			local color												            -- color shit
 			local char, health, maxhealth, mag, render				 -- other shit
             if VISIBLE and model and IsAlive(model) then
 				local hp = GetHealth(model)
 				char, health, maxhealth = model, hp[1], hp[2]
 				cf, size = char:GetBoundingBox()
-				color = fromRGB(255, 255, 255)
 				mag = (ccf - cf.Position).Magnitude
 				render = mag <= 300
 				if render then
@@ -200,7 +199,8 @@ function update()
 					if inViewport and render then
 						SetProp(obj, "Transparency", 1)
 						SetProp(obj, "Color", color)
-						if type == "Boxes" and VBOX then
+						if type == "Boxes" then
+							SetProp(obj, "Visible", VBOX)
 							local box, out = obj.Box, obj.Outline
 
 							local A = Vector2new(trx, try)
@@ -218,7 +218,8 @@ function update()
 							out.PointB = B
 							out.PointC = C
 							out.PointD = D
-						elseif type == "Names" and VNAME then
+						elseif type == "Names" then
+							SetProp(obj, "Visible", VNAME)
 							local name, data = obj.Name, obj.Data
 							local h,l = (tly > try and tly) or try, (tly < try and tly) or try
 							
@@ -227,7 +228,8 @@ function update()
 
 							name.Text = model.Name
 							data.Text = "[ "..mathfloor((health / maxhealth) * 100).."% ]"
-                        elseif type == "Tracer" and VTRACER then
+                        elseif type == "Tracer" then
+							SetProp(obj, "Visible", VTRACER)
                             local Tracer, Outline = obj.Tracer, obj.Outline
                             local x, y = camera.ViewportSize.X, camera.ViewportSize.Y
                             local Origin={
