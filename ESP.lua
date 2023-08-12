@@ -1,4 +1,3 @@
---This is not a full ESP
 if not Drawing then
 	game:GetService("Players").LocalPlayer:Kick("Your exploit does not have a Drawing Library!\n")
 	return
@@ -269,16 +268,22 @@ RunService:BindToRenderStep(name, 0, update)
 local esp = {}
 local destroyed = false
 
-function esp:Visible(name)
+function esp:Visible(Name, bool)
+	local item
     if Name=="visible" then
-        VISIBLE = not VISIBLE
+		item = VISIBLE
     elseif Name=="name" then
-        VNAME = not VNAME
-    elseif name=="box" then
-        VBOX = not VBOX
-    elseif name=="tracer" then
-        VTRACER = not VTRACER
+		item = VNAME
+    elseif Name=="box" then
+		item = VBOX
+    elseif Name=="tracer" then
+		item = VTRACER
     end;
+	if typeof(bool) == 'boolean' then
+		item = bool
+	else
+		item = not item
+	end;
 end
 
 function esp:Get(Name)
@@ -286,9 +291,9 @@ function esp:Get(Name)
         return VISIBLE
     elseif Name=="name" then
         return VNAME
-    elseif name=="box" then
+    elseif Name=="box" then
         return VBOX
-    elseif name=="tracer" then
+    elseif Name=="tracer" then
         return VTRACER
     end;
 end
