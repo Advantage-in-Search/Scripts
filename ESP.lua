@@ -266,20 +266,14 @@ local esp = {}
 local destroyed = false
 
 function esp:Visible(Name, bool)
-	local item
-    if Name=="visible" then
-		VTRACER = not VISIBLE
-    elseif Name=="name" then
-		VTRACER = not  VNAME
-    elseif Name=="box" then
-		VTRACER = not  VBOX
-    elseif Name=="tracer" then
-		VTRACER = not  VTRACER
-    end;
-	if typeof(bool) == 'boolean' then
-		item = bool
-	else
-		item = not item
+	if Name=="visible" then
+		VISIBLE = bool
+	elseif Name=="name" then
+		VNAME = bool
+	elseif Name=="box" then
+		VBOX = bool
+	elseif Name=="tracer" then
+		VTRACER = bool
 	end;
 end
 
