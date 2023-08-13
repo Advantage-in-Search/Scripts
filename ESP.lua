@@ -200,7 +200,9 @@ function update()
 						SetProp(obj, "Transparency", 1)
 						SetProp(obj, "Color", color)
 						if type == "Boxes" then
-							SetProp(obj, "Visible", VBOX)
+							if not(VBOX) then
+								SetProp(obj, "Visible", false);return
+							end
 							local box, out = obj.Box, obj.Outline
 
 							local A = Vector2new(trx, try)
@@ -219,7 +221,9 @@ function update()
 							out.PointC = C
 							out.PointD = D
 						elseif type == "Names" then
-							SetProp(obj, "Visible", VNAME)
+							if not(VNAME) then
+								SetProp(obj, "Visible", false);return
+							end
 							local name, data = obj.Name, obj.Data
 							local h,l = (tly > try and tly) or try, (tly < try and tly) or try
 							
@@ -229,7 +233,9 @@ function update()
 							name.Text = model.Name
 							data.Text = "[ "..mathfloor((health / maxhealth) * 100).."% ]"
                         elseif type == "Tracer" then
-							SetProp(obj, "Visible", VTRACER)
+							if not(VTRACER) then
+								SetProp(obj, "Visible", false);return
+							end
                             local Tracer, Outline = obj.Tracer, obj.Outline
                             local x, y = camera.ViewportSize.X, camera.ViewportSize.Y
                             local Origin={
@@ -277,6 +283,13 @@ function esp:Visible(Name, bool)
 	elseif Name=="tracer" then
 		VTRACER = bool
 	end;
+end
+
+function esp:SetVisibleAll(bool)
+	VISIBLE = false
+	VNAME = false
+	VBOX = false
+	VTRACER = false
 end
 
 function esp:Get(Name)
